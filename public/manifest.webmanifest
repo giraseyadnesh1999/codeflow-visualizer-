@@ -1,0 +1,29 @@
+{
+  "name": "CodeFlow — Code Execution Visualizer",
+  "short_name": "CodeFlow",
+  "description": "Watch JavaScript run one step at a time: call stack, scopes, memory and console, live.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "orientation": "any",
+  "background_color": "#08060f",
+  "theme_color": "#08060f",
+  "categories": ["education", "developer", "productivity"],
+  "shortcuts": [
+    {
+      "name": "Daily DSA Practice",
+      "short_name": "Daily DSA",
+      "description": "Today's array and string problems",
+      "url": "/practice",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
+  ],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
