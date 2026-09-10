@@ -1,24 +1,30 @@
 /*
  * CodeFlow service worker.
  *
- * - Navigations: network-first, falling back to the cached app shell offline.
- * - Hashed build assets (/_next/static): cache-first — they never change.
+ * - Navigations: network-first, falling back to the cached page offline.
+ * - Hashed build assets (_next/static): cache-first — they never change.
  * - Everything else same-origin: stale-while-revalidate.
+ *
+ * Every path is relative to the worker's scope, so the same file works at the
+ * site root locally and under /<repo>/ on GitHub Pages.
  *
  * Bump VERSION to invalidate old caches after a deploy.
  */
-const VERSION = 'v2'
+const VERSION = 'v3'
 const SHELL_CACHE = `codeflow-shell-${VERSION}`
 const RUNTIME_CACHE = `codeflow-runtime-${VERSION}`
 
+/** '/' locally, '/<repo>/' on GitHub Pages. */
+const BASE = new URL(self.registration.scope).pathname
+
 const PRECACHE = [
-  '/',
-  '/practice',
-  '/dsa-worker.js',
-  '/manifest.webmanifest',
-  '/icons/icon-192.png',
-  '/icons/icon-512.png',
-]
+  '',
+  'practice/',
+  'dsa-worker.js',
+  'manifest.webmanifest',
+  'icons/icon-192.png',
+  'icons/icon-512.png',
+].map((path) => BASE + path)
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -52,7 +58,7 @@ self.addEventListener('fetch', (event) => {
     return
   }
 
-  if (url.pathname.startsWith('/_next/static/')) {
+  if (url.pathname.startsWith(BASE + '_next/static/')) {
     event.respondWith(cacheFirst(request))
     return
   }
@@ -63,7 +69,7 @@ self.addEventListener('fetch', (event) => {
 async function networkFirst(request) {
   const cache = await caches.open(SHELL_CACHE)
   // Cache each page under its own path (ignoring #hash / ?query), so visiting
-  // /practice never replaces the cached visualizer at /.
+  // the practice page never replaces the cached visualizer.
   const url = new URL(request.url)
   const key = url.origin + url.pathname
   try {
@@ -71,7 +77,13 @@ async function networkFirst(request) {
     if (response.ok) cache.put(key, response.clone())
     return response
   } catch {
-    return (await cache.match(key)) || (await cache.match('/')) || Response.error()
+    return (
+      (await cache.match(key)) ||
+      // `/practice` offline: the page was cached as `/practice/`.
+      (!key.endsWith('/') && (await cache.match(key + '/'))) ||
+      (await cache.match(url.origin + BASE)) ||
+      Response.error()
+    )
   }
 }
 

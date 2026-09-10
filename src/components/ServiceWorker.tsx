@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
+import { withBase } from '@/lib/basePath'
 
 /** Registers the offline service worker (production builds only). */
 export function ServiceWorker() {
@@ -14,7 +15,7 @@ export function ServiceWorker() {
     }
 
     const register = () => {
-      navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch((err) => {
+      navigator.serviceWorker.register(withBase('/sw.js'), { scope: withBase('/') }).catch((err) => {
         console.warn('Service worker registration failed:', err)
       })
     }

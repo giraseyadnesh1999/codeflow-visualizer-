@@ -2,12 +2,36 @@
 
 **See how your JavaScript actually runs — one step at a time.**
 
+![CodeFlow stepping through a recursive factorial: the call stack holds six frames at the deepest point of the recursion, the current line is highlighted in the editor, and the timeline shows the recursion as a mountain of bars](docs/screenshots/visualizer.png)
+
 CodeFlow is an interactive code execution visualizer for developers and students. Paste or write
 JavaScript, then play, pause, or scrub through its execution while the call stack, scopes,
 heap memory and console update live — with a plain-English explanation of every step.
 
 It's a Next.js app and an installable, offline-capable PWA. Everything runs in the browser; no code
 is ever sent to a server.
+
+## Screenshots
+
+| Memory: watch an array mutate in place | 18 guided examples |
+|:---:|:---:|
+| ![Bubble sort mid-run: the Memory panel shows the original array and the copy being sorted as indexed cells, with loop variables in the Scope panel](docs/screenshots/memory.png) | ![The example picker listing programs grouped into Basics, Functions, Data and Objects](docs/screenshots/examples.png) |
+
+| Daily DSA practice | Run tests and get instant feedback |
+|:---:|:---:|
+| ![The Daily DSA page with today's array and string challenges marked solved, a day streak, and the 14-week activity heatmap](docs/screenshots/practice.png) | ![A submitted solution passing all 10 tests, with a hint revealed on the problem panel](docs/screenshots/practice-solved.png) |
+
+**Guided walkthrough for first-time visitors**
+
+![The guided tour spotlighting the Call Stack panel, with an explanation card beside it](docs/screenshots/tour.png)
+
+**Works on phones too**
+
+<p align="center">
+  <img src="docs/screenshots/mobile-visualizer.png" alt="The visualizer on a phone: editor, narration and playback controls stacked vertically" width="260">
+  &nbsp;&nbsp;&nbsp;
+  <img src="docs/screenshots/mobile-practice.png" alt="The Daily DSA page on a phone showing today's challenges and the streak card" width="260">
+</p>
 
 ## Features
 
@@ -155,4 +179,6 @@ scripts/
   test-interpreter.ts     interpreter test suite
   test-dsa.ts             problem-bank validation
   generate-icons.mjs      icon generator
+docs/
+  screenshots/            images used in this README
 ```

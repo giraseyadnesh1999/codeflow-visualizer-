@@ -1,5 +1,6 @@
 /** Main-thread side of the test runner: spawns the worker and grades results. */
 
+import { withBase } from '../basePath'
 import { deepEqual } from './format'
 import type { TestCase } from './types'
 
@@ -30,7 +31,7 @@ export function runTests(code: string, fn: string, cases: TestCase[]): Promise<R
   return new Promise((resolve) => {
     const started = performance.now()
     const results: (CaseResult | undefined)[] = new Array(cases.length).fill(undefined)
-    const worker = new Worker('/dsa-worker.js')
+    const worker = new Worker(withBase('/dsa-worker.js'))
     let settled = false
 
     const finish = (compileError?: string) => {
