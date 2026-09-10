@@ -1,5 +1,7 @@
 /** Share links carry the program in the URL hash as UTF-8-safe base64. */
 
+import { withBase } from './basePath'
+
 export function encodeShare(code: string): string {
   const bytes = new TextEncoder().encode(code)
   let binary = ''
@@ -21,5 +23,5 @@ export function decodeShare(hash: string): string | null {
 
 /** A link that opens the visualizer with `code` loaded. */
 export function visualizerLink(code: string): string {
-  return `/#code=${encodeShare(code)}`
+  return withBase(`/#code=${encodeShare(code)}`)
 }
